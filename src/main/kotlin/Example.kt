@@ -15,7 +15,9 @@ fun configureAndTrainModel(iter: SentenceIterator): Glove {
     val vec = Glove.Builder().iterate(iter)
             .tokenizerFactory(t)
             .alpha(0.75)
-            .learningRate(0.1)
+            .learningRate(0.2)// this learning rate causes NaN, and numerous exceptions
+            .learningRate(0.01)//Causes numerous exceptions, and very slow training
+
             // number of epochs for training
             .epochs(128)
             // cutoff for weighting function
@@ -28,7 +30,7 @@ fun configureAndTrainModel(iter: SentenceIterator): Glove {
             // if set to true word pairs will be built in both directions, LTR and RTL
             .symmetric(false)
             .maxMemory(1)
-            .minLearningRate(0.01)
+            .minLearningRate(0.005)
             .seed(15)
             .windowSize(1)
             .build();
